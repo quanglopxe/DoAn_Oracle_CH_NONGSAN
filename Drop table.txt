@@ -1,0 +1,9 @@
+drop table CHITIETHOADON;
+drop table CHITIETPHIEUNHAP;
+drop table HANGHOA;
+drop table HOADON;
+drop table PHIEUNHAP;
+drop table NHOMHANG;
+drop table KHACHHANG;
+drop table NHACUNGCAP;
+drop table NHANVIEN;
