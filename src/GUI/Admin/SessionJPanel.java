@@ -203,7 +203,7 @@ public class SessionJPanel extends javax.swing.JPanel {
             listSession.remove(index);
             loadSession();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn hàng hóa muốn xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn session muốn xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_btnXoaActionPerformed

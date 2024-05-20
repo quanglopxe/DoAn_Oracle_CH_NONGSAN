@@ -5,6 +5,7 @@
  */
 package Main;
 
+import GUI.Admin.DatafileJPanel;
 import GUI.BanHangJPanel;
 import GUI.HangHoaJPanel;
 import GUI.HoaDonJPanel;
@@ -121,6 +122,9 @@ public class ScreenSwitch {
                 case "Permission":
                     node = new PermissionJPanel();
                     break;
+                case "Datafile":
+                    node = new DatafileJPanel();
+                    break;                        
                 default:
                     if (kindSelected.equals("TrangChu")) {
                         node = new TrangChuJPanel();
