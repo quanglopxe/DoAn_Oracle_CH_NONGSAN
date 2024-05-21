@@ -3,30 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/DataProvider.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/DatafileDAO.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/MainJFrame.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/SGADAO.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/DatafileJFrame.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/Main/DanhMucBean.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/Main/FontOptionPane.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/SessionJPanel.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/Process.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/Session.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/DatafileJPanel.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/DangNhapJDialog.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/AdminJFrame.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/TableData.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/SessionJFrame.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/TablespaceDAO.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/SessionDAO.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/TablespaceJPanel.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/Main/ScreenSwitch.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/TaiKhoanDAO.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/Datafile.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/InfoDBJPanel.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/Main/Main.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/Tablespace.java</file>
+            <file>file:/D:/Java/AppNongSanSach/src/Main/Main.java</file>
         </group>
     </open-files>
 </project-private>

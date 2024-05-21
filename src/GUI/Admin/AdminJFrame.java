@@ -34,8 +34,7 @@ public class AdminJFrame extends javax.swing.JFrame {
         listItem.add(new DanhMucBean("User", jpnUser, jlbUser));
         listItem.add(new DanhMucBean("Policy", jpnPolicy, jlbPolicy));
         listItem.add(new DanhMucBean("Permission", jpnPermission, jlbPermission));
-        listItem.add(new DanhMucBean("Datafile", jpnDatafile, jlbDatafile));
-        
+
         controller.setEvent(listItem);
     }
 
@@ -65,8 +64,6 @@ public class AdminJFrame extends javax.swing.JFrame {
         jpnPermission = new javax.swing.JPanel();
         jlbPermission = new javax.swing.JLabel();
         jbtDangXuat = new javax.swing.JButton();
-        jpnDatafile = new javax.swing.JPanel();
-        jlbDatafile = new javax.swing.JLabel();
         jpnView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,7 +84,7 @@ public class AdminJFrame extends javax.swing.JFrame {
             jpnNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnNameLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jlbName, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addComponent(jlbName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
         jpnNameLayout.setVerticalGroup(
@@ -229,52 +226,25 @@ public class AdminJFrame extends javax.swing.JFrame {
             }
         });
 
-        jpnDatafile.setBackground(new java.awt.Color(211, 211, 211));
-
-        jlbDatafile.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jlbDatafile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icon-product.png"))); // NOI18N
-        jlbDatafile.setText("Quản Lý Datafile");
-
-        javax.swing.GroupLayout jpnDatafileLayout = new javax.swing.GroupLayout(jpnDatafile);
-        jpnDatafile.setLayout(jpnDatafileLayout);
-        jpnDatafileLayout.setHorizontalGroup(
-            jpnDatafileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnDatafileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlbDatafile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(3, 3, 3))
-        );
-        jpnDatafileLayout.setVerticalGroup(
-            jpnDatafileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbDatafile, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
         jpnMenu.setLayout(jpnMenuLayout);
         jpnMenuLayout.setHorizontalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpnName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jpnMenuLayout.createSequentialGroup()
-                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnMenuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jpnDatafile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jpnMenuLayout.createSequentialGroup()
-                        .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpnMenuLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jpnPermission, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jpnPolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jpnInfoDB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jpnSession, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jpnTablespace, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jpnUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jpnMenuLayout.createSequentialGroup()
-                                .addGap(94, 94, 94)
-                                .addComponent(jbtDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(15, 15, 15)
+                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jpnPermission, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnPolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnInfoDB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnSession, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnTablespace, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnMenuLayout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addComponent(jbtDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(106, 106, 106))
         );
         jpnMenuLayout.setVerticalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,11 +262,9 @@ public class AdminJFrame extends javax.swing.JFrame {
                 .addComponent(jpnPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jpnPermission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jpnDatafile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(100, 100, 100)
                 .addComponent(jbtDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout jpnViewLayout = new javax.swing.GroupLayout(jpnView);
@@ -356,7 +324,6 @@ public class AdminJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbtDangXuat;
-    private javax.swing.JLabel jlbDatafile;
     private javax.swing.JLabel jlbInfoDB;
     private javax.swing.JLabel jlbName;
     private javax.swing.JLabel jlbPermission;
@@ -364,7 +331,6 @@ public class AdminJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jlbSession;
     private javax.swing.JLabel jlbTablespace;
     private javax.swing.JLabel jlbUser;
-    private javax.swing.JPanel jpnDatafile;
     private javax.swing.JPanel jpnInfoDB;
     private javax.swing.JPanel jpnMenu;
     private javax.swing.JPanel jpnName;
