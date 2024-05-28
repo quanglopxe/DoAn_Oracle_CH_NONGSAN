@@ -32,7 +32,7 @@ public class TablespaceDAO {
     public ArrayList<Tablespace> getInfo() {
         ArrayList<Tablespace> listTablespace = new ArrayList<Tablespace>();
         try {
-            ResultSet rs = DataProvider.getInstance().executeQuery("SELECT tablespace_name, user FROM dba_tablespaces");
+            ResultSet rs = DataProvider.getInstance().executeQuery("SELECT username, default_tablespace  FROM DBA_USERS");
             while (rs.next()) {
                 Tablespace tbs = new Tablespace(rs);
                 listTablespace.add(tbs);
@@ -47,7 +47,7 @@ public class TablespaceDAO {
     public ArrayList<Tablespace> getInfoByOwner(String user) {
         ArrayList<Tablespace> listTablespace = new ArrayList<Tablespace>();
         try {
-            ResultSet rs = DataProvider.getInstance().executeQuery("SELECT tablespace_name, user FROM dba_tablespaces WHERE user = '" + user + "'");
+            ResultSet rs = DataProvider.getInstance().executeQuery("SELECT username, default_tablespace  FROM DBA_USERS WHERE username = '" + user.toUpperCase() + "'");
             while (rs.next()) {
                 Tablespace tbs = new Tablespace(rs);
                 listTablespace.add(tbs);
@@ -61,7 +61,7 @@ public class TablespaceDAO {
 
     public ArrayList<Tablespace> createTablespace(String tablespace_name, String file_name) {
         ArrayList<Tablespace> listTablespace = new ArrayList<Tablespace>();
-        int rs = DataProvider.getInstance().executeNonQuery("CREATE TABLESPACE " + tablespace_name + " DATAFILE '" + file_name + "' SIZE 20M" ); // Handle the SQLException appropriately
+        int rs = DataProvider.getInstance().executeNonQuery("CREATE TABLESPACE " + tablespace_name + " DATAFILE '" + file_name + "' SIZE 20M" );
         // For example, printing the stack trace
         if (rs > 0) {
             Tablespace tbs = new Tablespace(tablespace_name, file_name);
