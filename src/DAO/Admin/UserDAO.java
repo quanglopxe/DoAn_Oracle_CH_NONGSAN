@@ -67,7 +67,7 @@ public class UserDAO {
     {
         String empName = null;
         try {
-            ResultSet rs = DataProvider.getInstance().executeQuery("SELECT TENNV FROM CHNONGSAN.NhanVien where username = '" + username + "'");
+            ResultSet rs = DataProvider.getInstance().executeQuery("SELECT TENNV FROM CHNONGSAN.NhanVien where username = '" + username.toUpperCase() + "'");
             while (rs.next()) {
                 empName = rs.getString("TENNV");                
             }
