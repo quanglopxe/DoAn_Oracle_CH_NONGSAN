@@ -5,11 +5,16 @@
  */
 package GUI;
 
+import DAO.Admin.UserDAO;
 import DAO.DataProvider;
 import GUI.Admin.AdminJFrame;
 import DAO.TaiKhoanDAO;
+import DTO.Admin.User;
 import DTO.NhanVien;
 import java.awt.Color;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import javax.swing.JFrame;
 
 /**
@@ -135,7 +140,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private LocalDateTime lastLogin = null;
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         jlbMsg.setForeground(Color.RED);
@@ -153,12 +158,16 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                         jlbMsg.setText("<html><div style='width:200px; white-space: pre-wrap; text-align: center;'>Tài khoản của bạn đang bị tạm khóa!</div></html>");
                     } else {
                         this.dispose();
+                        String EmpName = UserDAO.getInstance().getEmpname(jtfUserName.getText());
+                        User.setTENNV(EmpName);
+                        Timestamp LastLogin = UserDAO.getInstance().getLastLogin(jtfUserName.getText());
+                        User.setLAST_LOGIN(LastLogin);
                         if (nv.getChucVu().equals("Nhân viên")) {
                             MainJFrame mainJFrame = new MainJFrame();
                             mainJFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                             mainJFrame.setVisible(true);
                             mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        } else {
+                        } else {                            
                             AdminJFrame adminJFrame = new AdminJFrame();
                             adminJFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                             adminJFrame.setVisible(true);

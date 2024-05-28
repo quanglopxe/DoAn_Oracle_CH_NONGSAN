@@ -6,6 +6,8 @@
 package GUI.Admin;
 
 import DAO.Admin.SGADAO;
+import DAO.Admin.PGADAO;
+
 import DAO.HangHoaDAO;
 import DTO.Admin.TableData;
 import DTO.HangHoa;
@@ -29,7 +31,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class InfoDBJPanel extends javax.swing.JPanel {
 
-    ArrayList<TableData> listSGA;
+    ArrayList<TableData> listSGA, listPGA;
 
     /**
      * Creates new form InfoDBJPanel
@@ -54,7 +56,7 @@ public class InfoDBJPanel extends javax.swing.JPanel {
         jtSGA = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jpnPGA = new javax.swing.JPanel();
-        jpnView1 = new javax.swing.JPanel();
+        jpnViewPGA = new javax.swing.JPanel();
         jspPGA = new javax.swing.JScrollPane();
         jtPGA = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -150,16 +152,16 @@ public class InfoDBJPanel extends javax.swing.JPanel {
         });
         jspPGA.setViewportView(jtPGA);
 
-        javax.swing.GroupLayout jpnView1Layout = new javax.swing.GroupLayout(jpnView1);
-        jpnView1.setLayout(jpnView1Layout);
-        jpnView1Layout.setHorizontalGroup(
-            jpnView1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnView1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpnViewPGALayout = new javax.swing.GroupLayout(jpnViewPGA);
+        jpnViewPGA.setLayout(jpnViewPGALayout);
+        jpnViewPGALayout.setHorizontalGroup(
+            jpnViewPGALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnViewPGALayout.createSequentialGroup()
                 .addComponent(jspPGA, javax.swing.GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
-        jpnView1Layout.setVerticalGroup(
-            jpnView1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jpnViewPGALayout.setVerticalGroup(
+            jpnViewPGALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jspPGA, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
         );
 
@@ -174,7 +176,7 @@ public class InfoDBJPanel extends javax.swing.JPanel {
             jpnPGALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnPGALayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpnView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jpnViewPGA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jpnPGALayout.createSequentialGroup()
                 .addGap(301, 301, 301)
@@ -187,7 +189,7 @@ public class InfoDBJPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpnView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jpnViewPGA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -308,13 +310,53 @@ public class InfoDBJPanel extends javax.swing.JPanel {
         jpnView.validate();
         jpnView.repaint();
     }
+ 
+  void LoadPGAVaoTable() {
+        
+        String[] header = {"Name", "Value_MB"};
+        listPGA = PGADAO.getInstance().getInfo();
+        DefaultTableModel modelTableDb = new DefaultTableModel(header, 0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+
+        for (TableData info : listPGA) {
+            Object[] row = {info.getName(), info.getValue()};
+            modelTableDb.addRow(row);
+        }
+        
+        TableRowSorter<TableModel> rowSorter = null;
+        
+        
+        jtPGA.setModel(modelTableDb);
+        jtPGA.setRowSorter(rowSorter);
+
+        jtPGA.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        jtPGA.setFont(new Font("Arial", Font.PLAIN, 14));
+        jtPGA.getTableHeader().setPreferredSize(new Dimension(100, 50));
+        jtPGA.setRowHeight(50);
+        jtPGA.validate();
+        jtPGA.repaint();
+
+        jspPGA.setPreferredSize(new Dimension(1350, 400));
+
+        jpnViewPGA.removeAll();
+        jpnViewPGA.setLayout(new CardLayout());
+        jpnViewPGA.add(jspPGA);
+        jpnViewPGA.validate();
+        jpnViewPGA.repaint();
+    }
     private void jtbSGAStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtbSGAStateChanged
         // TODO add your handling code here:
         int index = jtbSGA.getSelectedIndex();
         if (index == 0) {
             LoadSGAVaoTable();
-        } else {
-            LoadSGAVaoTable();
+        }
+        if(index == 1)
+        {
+            LoadPGAVaoTable();
         }
     }//GEN-LAST:event_jtbSGAStateChanged
 
@@ -355,8 +397,8 @@ public class InfoDBJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jpnProcess;
     private javax.swing.JPanel jpnSGA;
     private javax.swing.JPanel jpnView;
-    private javax.swing.JPanel jpnView1;
     private javax.swing.JPanel jpnView2;
+    private javax.swing.JPanel jpnViewPGA;
     private javax.swing.JScrollPane jspPGA;
     private javax.swing.JScrollPane jspProcess;
     private javax.swing.JScrollPane jspSGA;

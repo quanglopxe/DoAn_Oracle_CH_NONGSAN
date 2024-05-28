@@ -5,6 +5,7 @@
  */
 package GUI.Admin;
 
+import DTO.Admin.User;
 import GUI.DangNhapJDialog;
 import Main.DanhMucBean;
 import Main.ScreenSwitch;
@@ -23,7 +24,8 @@ public class AdminJFrame extends javax.swing.JFrame {
     public AdminJFrame() {
         initComponents();
         setTitle("QUẢN TRỊ CƠ SỞ DỮ LIỆU ORACLE");
-
+        jlbEmpName.setText(User.getTENNV());
+        jlbLastLogin.setText(User.getLAST_LOGIN() + "");
         ScreenSwitch controller = new ScreenSwitch(jpnView);
         controller.setView(jpnInfoDB, jlbInfoDB, "InfoDB");
 
@@ -67,6 +69,10 @@ public class AdminJFrame extends javax.swing.JFrame {
         jbtDangXuat = new javax.swing.JButton();
         jpnDatafile = new javax.swing.JPanel();
         jlbDatafile = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jlbEmpName = new javax.swing.JLabel();
+        jlbLastLogin = new javax.swing.JLabel();
         jpnView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -249,6 +255,20 @@ public class AdminJFrame extends javax.swing.JFrame {
             .addComponent(jlbDatafile, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
         );
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Tên");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Lần đăng nhập cuối");
+
+        jlbEmpName.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jlbEmpName.setForeground(new java.awt.Color(255, 255, 255));
+
+        jlbLastLogin.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jlbLastLogin.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
         jpnMenu.setLayout(jpnMenuLayout);
         jpnMenuLayout.setHorizontalGroup(
@@ -273,7 +293,16 @@ public class AdminJFrame extends javax.swing.JFrame {
                             .addGroup(jpnMenuLayout.createSequentialGroup()
                                 .addGap(94, 94, 94)
                                 .addComponent(jbtDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jpnMenuLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlbLastLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlbEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jpnMenuLayout.setVerticalGroup(
@@ -294,7 +323,18 @@ public class AdminJFrame extends javax.swing.JFrame {
                 .addComponent(jpnPermission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jpnDatafile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jpnMenuLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpnMenuLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlbLastLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jbtDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -321,8 +361,10 @@ public class AdminJFrame extends javax.swing.JFrame {
         );
         jpnRootLayout.setVerticalGroup(
             jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpnRootLayout.createSequentialGroup()
+                .addComponent(jpnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -355,9 +397,13 @@ public class AdminJFrame extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtDangXuat;
     private javax.swing.JLabel jlbDatafile;
+    private javax.swing.JLabel jlbEmpName;
     private javax.swing.JLabel jlbInfoDB;
+    private javax.swing.JLabel jlbLastLogin;
     private javax.swing.JLabel jlbName;
     private javax.swing.JLabel jlbPermission;
     private javax.swing.JLabel jlbPolicy;

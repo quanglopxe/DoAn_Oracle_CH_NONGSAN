@@ -37,7 +37,9 @@ public class DataProvider {
             e.printStackTrace();
         }
     }
-
+    public Connection getConnection() {
+        return this.connection;
+    }
     // Phương thức getInstance để lấy thể hiện duy nhất của lớp DataProvider
     public static synchronized DataProvider getInstance() {
         if (instance == null) {
@@ -46,6 +48,7 @@ public class DataProvider {
         return instance;
     }
 
+    
     public ResultSet executeQuery(String query, Object... parameters) {
         ResultSet resultSet = null;
         try {

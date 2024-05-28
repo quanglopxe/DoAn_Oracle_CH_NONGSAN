@@ -4,13 +4,24 @@
  * and open the template in the editor.
  */
 package GUI.Admin;
-
+import DAO.Admin.UserDAO;
+import DTO.Admin.User;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.ArrayList;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author Admin
  */
 public class UserJPanel extends javax.swing.JPanel {
-
+    ArrayList<User> listUser;
+    
     /**
      * Creates new form UserJPanel
      */
@@ -27,30 +38,219 @@ public class UserJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jtbUser = new javax.swing.JTabbedPane();
+        jpnInfoUser = new javax.swing.JPanel();
+        jpnView = new javax.swing.JPanel();
+        jspUser = new javax.swing.JScrollPane();
+        jtUser = new javax.swing.JTable();
+        jtfUserName = new javax.swing.JTextField();
+        jlbError = new javax.swing.JLabel();
+        jbtSearch = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        jLabel1.setText("User");
+        jtbUser.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jtbUser.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jtbUserStateChanged(evt);
+            }
+        });
+
+        jtUser.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jspUser.setViewportView(jtUser);
+
+        javax.swing.GroupLayout jpnViewLayout = new javax.swing.GroupLayout(jpnView);
+        jpnView.setLayout(jpnViewLayout);
+        jpnViewLayout.setHorizontalGroup(
+            jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnViewLayout.createSequentialGroup()
+                .addComponent(jspUser, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+        jpnViewLayout.setVerticalGroup(
+            jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jspUser, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+        );
+
+        jbtSearch.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbtSearch.setText("Xem");
+        jbtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSearchActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel1.setText("Nhập tên User cần xem thông tin");
+
+        javax.swing.GroupLayout jpnInfoUserLayout = new javax.swing.GroupLayout(jpnInfoUser);
+        jpnInfoUser.setLayout(jpnInfoUserLayout);
+        jpnInfoUserLayout.setHorizontalGroup(
+            jpnInfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnInfoUserLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpnInfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpnInfoUserLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtfUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)
+                        .addComponent(jlbError, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jpnInfoUserLayout.setVerticalGroup(
+            jpnInfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnInfoUserLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addGroup(jpnInfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlbError, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpnInfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jtbUser.addTab("Thông tin User", jpnInfoUser);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(156, 156, 156)
-                .addComponent(jLabel1)
-                .addContainerGap(957, Short.MAX_VALUE))
+            .addGap(0, 1139, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(15, 15, 15)
+                    .addComponent(jtbUser)
+                    .addGap(15, 15, 15)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jLabel1)
-                .addContainerGap(502, Short.MAX_VALUE))
+            .addGap(0, 596, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(15, 15, 15)
+                    .addComponent(jtbUser)
+                    .addGap(15, 15, 15)))
         );
     }// </editor-fold>//GEN-END:initComponents
+    private void loadUser()
+    {
+        String[] header = {"USERNAME", "CREATED", "EXPIRY_DATE", "ACCOUNT_STATUS", "LAST_LOGIN", "PROFILE"};
+        listUser = UserDAO.getInstance().getInfo();
+        DefaultTableModel modelTableDb = new DefaultTableModel(header, 0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+        if(!listUser.isEmpty())
+        {
+            for (User user : listUser) {
+                Object[] row = {user.getUSERNAME(), user.getCREATED(), user.getEXPIRY_DATE(), user.getACCOUNT_STATUS(), user.getLAST_LOGIN(), user.getPROFILE()};
+                modelTableDb.addRow(row);
+            }
+            jlbError.setText("");
+        }
+        else
+        jlbError.setText("Không có user hiển thị");
+        TableRowSorter<TableModel> rowSorter = null;        
+
+        jtUser.setModel(modelTableDb);
+        jtUser.setRowSorter(rowSorter);
+
+        jtUser.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        jtUser.setFont(new Font("Arial", Font.PLAIN, 14));
+        jtUser.getTableHeader().setPreferredSize(new Dimension(100, 50));
+        jtUser.setRowHeight(50);
+        jtUser.validate();
+        jtUser.repaint();
+
+        jspUser.setPreferredSize(new Dimension(1350, 400));
+
+        jpnView.removeAll();
+        jpnView.setLayout(new CardLayout());
+        jpnView.add(jspUser);
+        jpnView.validate();
+        jpnView.repaint();
+    }
+    private void jbtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSearchActionPerformed
+        // TODO add your handling code here:
+        String[] header = {"USERNAME", "CREATED", "EXPIRY_DATE", "ACCOUNT_STATUS", "LAST_LOGIN", "PROFILE"};
+        listUser = UserDAO.getInstance().getInfoByName(jtfUserName.getText());
+        DefaultTableModel modelTableDb = new DefaultTableModel(header, 0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+        if(jtfUserName.getText().isEmpty())
+            loadUser();
+        if(!listUser.isEmpty())
+        {
+            for (User user : listUser) {
+                Object[] row = {user.getUSERNAME(), user.getCREATED(), user.getEXPIRY_DATE(), user.getACCOUNT_STATUS(), user.getLAST_LOGIN(), user.getPROFILE()};
+                modelTableDb.addRow(row);
+            }
+            jlbError.setText("");
+        }
+        else
+        jlbError.setText("Tên nhân viên không tồn tại!");
+        TableRowSorter<TableModel> rowSorter = null;        
+
+        jtUser.setModel(modelTableDb);
+        jtUser.setRowSorter(rowSorter);
+
+        jtUser.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        jtUser.setFont(new Font("Arial", Font.PLAIN, 14));
+        jtUser.getTableHeader().setPreferredSize(new Dimension(100, 50));
+        jtUser.setRowHeight(50);
+        jtUser.validate();
+        jtUser.repaint();
+
+        jspUser.setPreferredSize(new Dimension(1350, 400));
+
+        jpnView.removeAll();
+        jpnView.setLayout(new CardLayout());
+        jpnView.add(jspUser);
+        jpnView.validate();
+        jpnView.repaint();
+    }//GEN-LAST:event_jbtSearchActionPerformed
+
+    private void jtbUserStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtbUserStateChanged
+        // TODO add your handling code here:
+        int index = jtbUser.getSelectedIndex();
+        if (index == 0) {
+            loadUser();
+        }
+    }//GEN-LAST:event_jtbUserStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jbtSearch;
+    private javax.swing.JLabel jlbError;
+    private javax.swing.JPanel jpnInfoUser;
+    private javax.swing.JPanel jpnView;
+    private javax.swing.JScrollPane jspUser;
+    private javax.swing.JTable jtUser;
+    private javax.swing.JTabbedPane jtbUser;
+    private javax.swing.JTextField jtfUserName;
     // End of variables declaration//GEN-END:variables
 }

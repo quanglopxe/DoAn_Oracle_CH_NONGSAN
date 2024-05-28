@@ -149,7 +149,7 @@ public class TablespaceJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void loadTablespace() {
-        String[] header = {"Tablespace name", "User"};        
+        String[] header = {"Username", "Default Tablespace"};        
         listTBS = TablespaceDAO.getInstance().getInfo();
         DefaultTableModel modelTableDb = new DefaultTableModel(header, 0) {
             @Override
@@ -158,7 +158,7 @@ public class TablespaceJPanel extends javax.swing.JPanel {
             }
         };
         for (Tablespace tbs : listTBS) {
-            Object[] row = {tbs.getTablespace_name(), tbs.getUser()};
+            Object[] row = {tbs.getUsername(), tbs.getDefault_tablespace()};
             modelTableDb.addRow(row);
         }
         jlbError.setText("");
@@ -195,7 +195,7 @@ public class TablespaceJPanel extends javax.swing.JPanel {
 
     private void jbtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSearchActionPerformed
         // TODO add your handling code here:
-        String[] header = {"Tablespace name", "User"};        
+        String[] header = {"Username", "Default Tablespace"};        
         listTBS = TablespaceDAO.getInstance().getInfoByOwner(jtfName.getText());
         DefaultTableModel modelTableDb = new DefaultTableModel(header, 0) {
             @Override
@@ -206,13 +206,11 @@ public class TablespaceJPanel extends javax.swing.JPanel {
         if(!listTBS.isEmpty())
         {
             for (Tablespace tbs : listTBS) {
-                Object[] row = {tbs.getTablespace_name(), tbs.getUser()};
+                Object[] row = {tbs.getUsername(), tbs.getDefault_tablespace()};
                 modelTableDb.addRow(row);
             }
             jlbError.setText("");
-        }
-        else
-            jlbError.setText("Tên nhân viên không tồn tại!");
+        }                    
         TableRowSorter<TableModel> rowSorter = null;
         jlbName.setText("Nhập tên nhân viên cần xem tablespace:");
         
@@ -234,6 +232,11 @@ public class TablespaceJPanel extends javax.swing.JPanel {
         jpnView.add(jspTBS);
         jpnView.validate();
         jpnView.repaint();
+        if(jtfName.getText().isEmpty())
+        {
+            jlbError.setText("Tên nhân viên không tồn tại!");
+            loadTablespace();            
+        }
     }//GEN-LAST:event_jbtSearchActionPerformed
 
 
