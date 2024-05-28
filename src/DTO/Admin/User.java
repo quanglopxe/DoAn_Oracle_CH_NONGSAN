@@ -15,69 +15,67 @@ import java.util.logging.Logger;
  * @author Quang
  */
 public class User {
-    static String USERNAME, ACCOUNT_STATUS, PROFILE, TENNV;
+    String USERNAME, ACCOUNT_STATUS, PROFILE;
+    static String TENNV;
+    Timestamp CREATED, EXPIRY_DATE;
+    static Timestamp LAST_LOGIN;
 
-    public static void setTENNV(String TENNV) {
-        User.TENNV = TENNV;
+    public String getUSERNAME() {
+        return USERNAME;
+    }
+
+    public String getACCOUNT_STATUS() {
+        return ACCOUNT_STATUS;
+    }
+
+    public String getPROFILE() {
+        return PROFILE;
     }
 
     public static String getTENNV() {
         return TENNV;
     }
-    static Timestamp CREATED, EXPIRY_DATE, LAST_LOGIN;
 
-    public static void setCREATED(Timestamp CREATED) {
-        User.CREATED = CREATED;
-    }
-
-    public static void setEXPIRY_DATE(Timestamp EXPIRY_DATE) {
-        User.EXPIRY_DATE = EXPIRY_DATE;
-    }
-
-    public static void setLAST_LOGIN(Timestamp LAST_LOGIN) {
-        User.LAST_LOGIN = LAST_LOGIN;
-    }
-
-    public User() {
-    }
-
-    public static String getUSERNAME() {
-        return USERNAME;
-    }
-
-    public static String getACCOUNT_STATUS() {
-        return ACCOUNT_STATUS;
-    }
-
-    public static String getPROFILE() {
-        return PROFILE;
-    }
-
-    
-
-    public static void setUSERNAME(String USERNAME) {
-        User.USERNAME = USERNAME;
-    }
-
-    public static void setACCOUNT_STATUS(String ACCOUNT_STATUS) {
-        User.ACCOUNT_STATUS = ACCOUNT_STATUS;
-    }
-
-    public static void setPROFILE(String PROFILE) {
-        User.PROFILE = PROFILE;
-    }
-
-    public static Timestamp getCREATED() {
+    public Timestamp getCREATED() {
         return CREATED;
     }
 
-    public static Timestamp getEXPIRY_DATE() {
+    public Timestamp getEXPIRY_DATE() {
         return EXPIRY_DATE;
     }
 
     public static Timestamp getLAST_LOGIN() {
         return LAST_LOGIN;
     }
+
+    public void setUSERNAME(String USERNAME) {
+        this.USERNAME = USERNAME;
+    }
+
+    public void setACCOUNT_STATUS(String ACCOUNT_STATUS) {
+        this.ACCOUNT_STATUS = ACCOUNT_STATUS;
+    }
+
+    public void setPROFILE(String PROFILE) {
+        this.PROFILE = PROFILE;
+    }
+
+    public static void setTENNV(String TENNV) {
+        User.TENNV = TENNV;
+    }
+
+    public void setCREATED(Timestamp CREATED) {
+        this.CREATED = CREATED;
+    }
+
+    public void setEXPIRY_DATE(Timestamp EXPIRY_DATE) {
+        this.EXPIRY_DATE = EXPIRY_DATE;
+    }
+
+    public static void setLAST_LOGIN(Timestamp LAST_LOGIN) {
+        User.LAST_LOGIN = LAST_LOGIN;
+    }
+    
 
     
     
