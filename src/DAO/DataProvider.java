@@ -11,7 +11,7 @@ public class DataProvider {
 
     private static DataProvider instance = null;
 
-    private static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+    private static final String URL = "jdbc:oracle:thin:@localhost:1521:qlnongsan";
     private static String USERNAME;
     private static String PASSWORD;
 

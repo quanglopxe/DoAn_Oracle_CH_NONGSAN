@@ -157,9 +157,9 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                     if (!nv.isTrangThai()) {
                         jlbMsg.setText("<html><div style='width:200px; white-space: pre-wrap; text-align: center;'>Tài khoản của bạn đang bị tạm khóa!</div></html>");
                     } else {
-                        this.dispose();
-                        String EmpName = UserDAO.getInstance().getEmpname(jtfUserName.getText());
-                        User.setTENNV(EmpName);
+                        this.dispose();   
+                        
+                        User.setTENNV(nv.getTenNV());
                         Timestamp LastLogin = UserDAO.getInstance().getLastLogin(jtfUserName.getText());
                         User.setLAST_LOGIN(LastLogin);
                         if (nv.getChucVu().equals("Nhân viên")) {
@@ -167,7 +167,8 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                             mainJFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                             mainJFrame.setVisible(true);
                             mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        } else {                            
+                        } else {       
+                            
                             AdminJFrame adminJFrame = new AdminJFrame();
                             adminJFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                             adminJFrame.setVisible(true);

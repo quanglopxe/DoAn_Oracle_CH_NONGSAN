@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/User.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/NhapHangJPanel.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/UserDAO.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/MainJFrame.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/NhaCungCapJFrame.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/NhomHangHoaJPanel.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/DangNhapJDialog.java</file>
-            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/AdminJFrame.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/Permission.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/UserJPanel.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/DataProvider.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/DatafileDAO.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/PolicyDAO.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/GUI/Admin/PermissionJPanel.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/Datafile.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DTO/Admin/Policy.java</file>
+            <file>file:/G:/HK6/DoAnNongSanSach_Oracle/app-nongsansach-oracle/src/DAO/Admin/PermissionDAO.java</file>
         </group>
     </open-files>
 </project-private>
