@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import DAO.Admin.SessionDAO;
+import DTO.Admin.Session;
 import DTO.Admin.User;
 import Main.DanhMucBean;
 import Main.ScreenSwitch;
@@ -378,7 +380,13 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jbtDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDangXuatActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        
+        ArrayList<Integer> sessionInfo = SessionDAO.getInstance().getCurrentSession();
+        if(sessionInfo!=null)
+        {
+            int sid = sessionInfo.get(0);
+            int serial = sessionInfo.get(1);
+            SessionDAO.getInstance().huySession(sid, serial);
+        }
         DangNhapJDialog dialog = new DangNhapJDialog(null, true);
         dialog.setTitle("Đăng Nhập Hệ Thống");
         dialog.setResizable(false);

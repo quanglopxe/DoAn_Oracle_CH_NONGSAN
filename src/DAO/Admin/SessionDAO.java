@@ -45,6 +45,22 @@ public class SessionDAO {
         }
         return listSession;
     }
+    public ArrayList<Integer> getCurrentSession() {
+        ArrayList<Integer> sessionInfo = null;        
+        try {
+            ResultSet rs = DataProvider.getInstance().executeQuery("SELECT sid, serial# FROM v$session WHERE audsid = USERENV('SESSIONID')");
+            while (rs.next()) {
+                int sid = rs.getInt("sid");
+                int serial = rs.getInt("serial#");
+                sessionInfo.add(sid);
+                sessionInfo.add(serial);
+            }
+        } catch (SQLException ex) {
+            // Handle the SQLException appropriately
+            ex.printStackTrace(); // For example, printing the stack trace
+        }
+        return sessionInfo;
+    }
 
     public int huySession(int sid, int serial) {
         String sql = "ALTER SYSTEM KILL SESSION '" + sid + "," + serial + "' IMMEDIATE";
