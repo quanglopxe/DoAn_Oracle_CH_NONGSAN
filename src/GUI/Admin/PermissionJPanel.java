@@ -8,7 +8,9 @@ package GUI.Admin;
 import DAO.Admin.PermissionDAO;
 import DAO.Admin.UserDAO;
 import DAO.TaiKhoanDAO;
+import DAO.Admin.RolesDAO;
 import DTO.Admin.Permission;
+import DTO.Admin.Roles;
 import DTO.Admin.User;
 import DTO.NhanVien;
 import java.awt.CardLayout;
@@ -29,7 +31,9 @@ import javax.swing.table.TableRowSorter;
 public class PermissionJPanel extends javax.swing.JPanel {
 
     ArrayList<Permission> listPermission;
-    ArrayList<Permission> listUserPermission;    
+    ArrayList<Permission> listUserPermission;
+    ArrayList<Roles> listRoles;
+    ArrayList<Roles> listAllRoles;
     private List<String> checkedPermissions = new ArrayList<>();
     
     /**
@@ -37,8 +41,7 @@ public class PermissionJPanel extends javax.swing.JPanel {
      */
     public PermissionJPanel() {
         initComponents();
-        loadPrivs();
-        loadComboBoxUers();        
+               
     }
 
     private void loadPrivs()
@@ -129,6 +132,95 @@ public class PermissionJPanel extends javax.swing.JPanel {
             jpnUserPriv.repaint();
         }
     }
+    private void loadRoles()
+    {
+       String[] header = {"NHÓM QUYỀN"};
+        listAllRoles = RolesDAO.getInstance().getInfo();
+        DefaultTableModel modelTableDb = new DefaultTableModel(header, 0) {            
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {                
+                return false;
+            }
+            
+        };
+        if(!listAllRoles.isEmpty())
+        {
+            for (Roles role : listAllRoles) {
+                Object[] row = {role.getRole()};
+                modelTableDb.addRow(row);
+            }            
+        }        
+        TableRowSorter<TableModel> rowSorter = null;        
+
+        jtListRole.setModel(modelTableDb);
+        jtListRole.setRowSorter(rowSorter);
+
+        jtListRole.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        jtListRole.setFont(new Font("Arial", Font.PLAIN, 14));
+        jtListRole.getTableHeader().setPreferredSize(new Dimension(100, 50));
+        jtListRole.setRowHeight(50);
+        jtListRole.validate();
+        jtListRole.repaint();
+
+        jsListRole.setPreferredSize(new Dimension(700, 400));
+
+        jpnListRole.removeAll();
+        jpnListRole.setLayout(new CardLayout());
+        jpnListRole.add(jsListRole);
+        jpnListRole.validate();
+        jpnListRole.repaint();
+    }
+    private void loadPrivsForRoles()
+    {
+        String[] header = {"", "QUYỀN"};
+        listPermission = PermissionDAO.getInstance().getInfo();
+        DefaultTableModel modelTableDb = new DefaultTableModel(header, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 0 ? Boolean.class : String.class;
+            }
+            
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                int selectedRow = jtListRole.getSelectedRow();
+                int selectedColumn = jtListRole.getSelectedColumn();
+                
+                Object value = jtListRole.getValueAt(selectedRow, selectedColumn);
+                if(value != null)
+                {
+                    return colIndex == 0;
+                }
+                return false;
+            }
+            
+        };
+        if(!listPermission.isEmpty())
+        {
+            for (Permission p : listPermission) {
+                Object[] row = {false, p.getPrivilege()};
+                modelTableDb.addRow(row);
+            }            
+        }        
+        TableRowSorter<TableModel> rowSorter = null;        
+
+        jtListPriv.setModel(modelTableDb);
+        jtListPriv.setRowSorter(rowSorter);
+
+        jtListPriv.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        jtListPriv.setFont(new Font("Arial", Font.PLAIN, 14));
+        jtListPriv.getTableHeader().setPreferredSize(new Dimension(100, 50));
+        jtListPriv.setRowHeight(50);
+        jtListPriv.validate();
+        jtListPriv.repaint();
+
+        jsListPriv.setPreferredSize(new Dimension(700, 400));
+
+        jpnListPriv.removeAll();
+        jpnListPriv.setLayout(new CardLayout());
+        jpnListPriv.add(jsListPriv);
+        jpnListPriv.validate();
+        jpnListPriv.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,9 +246,22 @@ public class PermissionJPanel extends javax.swing.JPanel {
         jpnRole = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jtfRoleName = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnTaoRole = new javax.swing.JButton();
+        btnXoaRole = new javax.swing.JButton();
+        jpnListRole = new javax.swing.JPanel();
+        jsListRole = new javax.swing.JScrollPane();
+        jtListRole = new javax.swing.JTable();
+        jpnListPriv = new javax.swing.JPanel();
+        jsListPriv = new javax.swing.JScrollPane();
+        jtListPriv = new javax.swing.JTable();
+        btnCapQuyenChoNhomQuyen = new javax.swing.JButton();
 
         jtbPermission.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jtbPermission.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jtbPermissionStateChanged(evt);
+            }
+        });
 
         jcbEmpName.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
 
@@ -292,8 +397,87 @@ public class PermissionJPanel extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Tên nhóm quyền");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton1.setText("Tạo");
+        btnTaoRole.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnTaoRole.setText("Tạo");
+        btnTaoRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoRoleActionPerformed(evt);
+            }
+        });
+
+        btnXoaRole.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnXoaRole.setText("Xóa");
+        btnXoaRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaRoleActionPerformed(evt);
+            }
+        });
+
+        jtListRole.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtListRole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtListRoleMouseClicked(evt);
+            }
+        });
+        jsListRole.setViewportView(jtListRole);
+
+        javax.swing.GroupLayout jpnListRoleLayout = new javax.swing.GroupLayout(jpnListRole);
+        jpnListRole.setLayout(jpnListRoleLayout);
+        jpnListRoleLayout.setHorizontalGroup(
+            jpnListRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsListRole, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+        );
+        jpnListRoleLayout.setVerticalGroup(
+            jpnListRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsListRole, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+
+        jtListPriv.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtListPriv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtListPrivMouseClicked(evt);
+            }
+        });
+        jsListPriv.setViewportView(jtListPriv);
+
+        javax.swing.GroupLayout jpnListPrivLayout = new javax.swing.GroupLayout(jpnListPriv);
+        jpnListPriv.setLayout(jpnListPrivLayout);
+        jpnListPrivLayout.setHorizontalGroup(
+            jpnListPrivLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsListPriv, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jpnListPrivLayout.setVerticalGroup(
+            jpnListPrivLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsListPriv, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+        );
+
+        btnCapQuyenChoNhomQuyen.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnCapQuyenChoNhomQuyen.setText("Cấp quyền cho nhóm quyền");
+        btnCapQuyenChoNhomQuyen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapQuyenChoNhomQuyenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpnRoleLayout = new javax.swing.GroupLayout(jpnRole);
         jpnRole.setLayout(jpnRoleLayout);
@@ -301,12 +485,22 @@ public class PermissionJPanel extends javax.swing.JPanel {
             jpnRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnRoleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jtfRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1143, Short.MAX_VALUE))
+                .addGroup(jpnRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnRoleLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtfRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTaoRole, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnXoaRole, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(355, 355, 355)
+                        .addComponent(btnCapQuyenChoNhomQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpnRoleLayout.createSequentialGroup()
+                        .addComponent(jpnListRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(jpnListPriv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         jpnRoleLayout.setVerticalGroup(
             jpnRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,8 +509,14 @@ public class PermissionJPanel extends javax.swing.JPanel {
                 .addGroup(jpnRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtfRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(597, Short.MAX_VALUE))
+                    .addComponent(btnTaoRole, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoaRole, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCapQuyenChoNhomQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpnRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpnListRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnListPriv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtbPermission.addTab("Nhóm quyền", jpnRole);
@@ -333,7 +533,7 @@ public class PermissionJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtbPermission, javax.swing.GroupLayout.PREFERRED_SIZE, 695, Short.MAX_VALUE)
+                .addComponent(jtbPermission, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -341,7 +541,10 @@ public class PermissionJPanel extends javax.swing.JPanel {
     private void btnXemQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemQuyenActionPerformed
         // TODO add your handling code here:
         if(jcbEmpName.getSelectedItem() != null)
+        {
+            jpnUserPriv.setVisible(true);
             loadUserPrivs();
+        }
         else
             JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần xem quyền" , "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnXemQuyenActionPerformed
@@ -354,7 +557,7 @@ public class PermissionJPanel extends javax.swing.JPanel {
             for (String permission : checkedPermissions) {
                 PermissionDAO.getInstance().revokeUserPrivilege(username, permission);
                 JOptionPane.showMessageDialog(this, "Đã hủy quyền " + permission + " của " + username, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            }
+            }            
         }
         else
         {
@@ -370,7 +573,7 @@ public class PermissionJPanel extends javax.swing.JPanel {
             for (String permission : checkedPermissions) {
                 PermissionDAO.getInstance().grantUserPrivilege(username, permission);
                 JOptionPane.showMessageDialog(this, "Đã phân quyền " + permission + " cho " + username, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            }
+            }            
         }
         else
         {
@@ -380,11 +583,96 @@ public class PermissionJPanel extends javax.swing.JPanel {
 
     private void jtPermissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPermissionMouseClicked
         // TODO add your handling code here:
+        int row = jtPermission.rowAtPoint(evt.getPoint());
+        int column = jtPermission.columnAtPoint(evt.getPoint());
+
+        if (column == 0) {
+            boolean isChecked = (boolean) jtPermission.getValueAt(row, column);
+            String permission = (String) jtPermission.getValueAt(row, 1);
+
+            if (isChecked) {
+                checkedPermissions.add(permission);
+            }
+        }
     }//GEN-LAST:event_jtPermissionMouseClicked
 
     private void jtUserPrivsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtUserPrivsMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jtUserPrivsMouseClicked
+
+    private void btnTaoRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoRoleActionPerformed
+        // TODO add your handling code here:
+        String rolename = jtfRoleName.getText();
+        RolesDAO.getInstance().createRole(rolename);
+        JOptionPane.showMessageDialog(this, "Đã tạo nhóm quyền " + rolename, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnTaoRoleActionPerformed
+
+    private void jtListRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListRoleMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtListRoleMouseClicked
+
+    private void jtListPrivMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListPrivMouseClicked
+        // TODO add your handling code here:
+        int row = jtListPriv.rowAtPoint(evt.getPoint());
+        int column = jtListPriv.columnAtPoint(evt.getPoint());
+
+        if (column == 0) {
+            boolean isChecked = (boolean) jtListPriv.getValueAt(row, column);
+            String permission = (String) jtListPriv.getValueAt(row, 1);
+
+            if (isChecked) {
+                checkedPermissions.add(permission);
+            }
+        }
+        
+    }//GEN-LAST:event_jtListPrivMouseClicked
+
+    private void jtbPermissionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtbPermissionStateChanged
+        // TODO add your handling code here:        
+        loadComboBoxUers(); 
+        int index = jtbPermission.getSelectedIndex();
+        if (index == 0) {                                 
+            loadPrivs();
+            jpnUserPriv.setVisible(false);
+        }
+        if(index == 1)
+        {
+            loadPrivsForRoles();
+            loadRoles();
+        }
+    }//GEN-LAST:event_jtbPermissionStateChanged
+
+    private void btnCapQuyenChoNhomQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapQuyenChoNhomQuyenActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = jtListRole.getSelectedRow();
+        int selectedColumn = jtListRole.getSelectedColumn();
+        
+        String roles = (String) jtListRole.getValueAt(selectedRow, selectedColumn);
+        if(checkedPermissions != null)
+        {
+            for (String permission : checkedPermissions) {
+                PermissionDAO.getInstance().grantUserPrivilege(roles, permission);
+                JOptionPane.showMessageDialog(this, "Đã phân quyền " + permission + " cho " + roles, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn quyền cần thực hiện" , "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCapQuyenChoNhomQuyenActionPerformed
+
+    private void btnXoaRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaRoleActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = jtListRole.getSelectedRow();
+        int selectedColumn = jtListRole.getSelectedColumn();
+        
+        String roles = (String) jtListRole.getValueAt(selectedRow, selectedColumn);
+        if(roles != null)
+        {            
+            RolesDAO.getInstance().dropRole(roles);
+            JOptionPane.showMessageDialog(this, "Đã hủy nhóm quyền " + roles, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnXoaRoleActionPerformed
     private void loadComboBoxUers()
     {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -398,19 +686,27 @@ public class PermissionJPanel extends javax.swing.JPanel {
     }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCapQuyenChoNhomQuyen;
     private javax.swing.JButton btnHuyQuyen;
     private javax.swing.JButton btnPhanQuyen;
+    private javax.swing.JButton btnTaoRole;
     private javax.swing.JButton btnXemQuyen;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnXoaRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JComboBox<String> jcbEmpName;
+    private javax.swing.JPanel jpnListPriv;
+    private javax.swing.JPanel jpnListRole;
     private javax.swing.JPanel jpnPriv;
     private javax.swing.JPanel jpnRole;
     private javax.swing.JPanel jpnUserPriv;
     private javax.swing.JPanel jpnView;
+    private javax.swing.JScrollPane jsListPriv;
+    private javax.swing.JScrollPane jsListRole;
     private javax.swing.JScrollPane jsPermission;
     private javax.swing.JScrollPane jsUserPrivs;
+    private javax.swing.JTable jtListPriv;
+    private javax.swing.JTable jtListRole;
     private javax.swing.JTable jtPermission;
     private javax.swing.JTable jtUserPrivs;
     private javax.swing.JTabbedPane jtbPermission;

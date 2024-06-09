@@ -49,7 +49,9 @@ public class Permission {
 
     public Permission() {
     }
-    
+    public Permission(String priv) {
+        this.privilege = priv;
+    }
     public Permission(ResultSet rs) {
         try {
             this.grantee = rs.getString("grantee");

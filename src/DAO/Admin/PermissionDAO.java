@@ -34,8 +34,9 @@ public class PermissionDAO {
         ArrayList<Permission> listPermission = new ArrayList<Permission>();
         try {
             ResultSet rs = DataProvider.getInstance().executeQuery("call sys.getPrivsList");
-            while (rs.next()) {                
-                Permission permission = new Permission(rs);
+            while (rs.next()) { 
+                String priv = rs.getString("privilege");
+                Permission permission = new Permission(priv);
                 listPermission.add(permission);
             }
         } catch (SQLException ex) {
@@ -68,5 +69,6 @@ public class PermissionDAO {
         int rs = DataProvider.getInstance().executeNonQuery("call sys.revoke_user_privilege",username, privs);
         return rs;
     }
+    
     
 }
