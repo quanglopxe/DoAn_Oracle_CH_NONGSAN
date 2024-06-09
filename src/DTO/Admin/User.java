@@ -78,7 +78,10 @@ public class User {
     
 
     
-    
+    public User(String Username)
+    {        
+        this.USERNAME = Username;            
+    }
     public User(ResultSet rs) {
         try {            
             this.USERNAME = rs.getString("USERNAME");  

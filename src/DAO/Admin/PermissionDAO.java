@@ -33,7 +33,21 @@ public class PermissionDAO {
     public ArrayList<Permission> getInfo() {
         ArrayList<Permission> listPermission = new ArrayList<Permission>();
         try {
-            ResultSet rs = DataProvider.getInstance().executeQuery("call getPrivsList");
+            ResultSet rs = DataProvider.getInstance().executeQuery("call sys.getPrivsList");
+            while (rs.next()) {                
+                Permission permission = new Permission(rs);
+                listPermission.add(permission);
+            }
+        } catch (SQLException ex) {
+            // Handle the SQLException appropriately
+            ex.printStackTrace(); // For example, printing the stack trace
+        }
+        return listPermission;
+    }
+    public ArrayList<Permission> getInfoByUser(String username) {
+        ArrayList<Permission> listPermission = new ArrayList<Permission>();
+        try {
+            ResultSet rs = DataProvider.getInstance().executeQuery("call sys.view_user_permissions", username);
             while (rs.next()) {
                 Permission permission = new Permission(rs);
                 listPermission.add(permission);
@@ -44,4 +58,15 @@ public class PermissionDAO {
         }
         return listPermission;
     }
+    public int grantUserPrivilege(String username, String privs)
+    {
+        int rs = DataProvider.getInstance().executeNonQuery("call sys.grant_permission",username, privs);
+        return rs;
+    }
+    public int revokeUserPrivilege(String username, String privs)
+    {
+        int rs = DataProvider.getInstance().executeNonQuery("call sys.revoke_user_privilege",username, privs);
+        return rs;
+    }
+    
 }

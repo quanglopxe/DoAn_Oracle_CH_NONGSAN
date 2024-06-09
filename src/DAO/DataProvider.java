@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import oracle.jdbc.OracleTypes;
 
 public class DataProvider {
 
@@ -18,6 +19,7 @@ public class DataProvider {
     public static void setUSERNAME(String USERNAME) {
         if(USERNAME.substring(0,2).equals("ad")) {
             USERNAME += " as sysdba";
+            
         }
         DataProvider.USERNAME = USERNAME;
     }
@@ -53,22 +55,41 @@ public class DataProvider {
         ResultSet resultSet = null;
         try {
             if (query.toLowerCase().startsWith("call")) { // Nếu là gọi stored procedure
+//                query = query.substring(0, 4) + " CHNONGSAN." + query.substring(5);
                 StringBuilder sqlBuilder = new StringBuilder();
-                sqlBuilder.append("{").append(query).append("(");
+                sqlBuilder.append("{ ").append(query).append("(");
                 for (int i = 0; i < parameters.length; i++) {
                     if (i > 0) {
                         sqlBuilder.append(", ");
                     }
                     sqlBuilder.append("?");
                 }
-                sqlBuilder.append(")}");
 
+                // Add a placeholder for the cursor OUT parameter
+                if (parameters.length > 0) {
+                    sqlBuilder.append(", ?");
+                } else {
+                    sqlBuilder.append("?");
+                }
+
+                sqlBuilder.append(") }");
+
+                // Prepare the callable statement
                 CallableStatement callableStatement = connection.prepareCall(sqlBuilder.toString());
+
+                // Set the input parameters
                 for (int i = 0; i < parameters.length; i++) {
                     callableStatement.setObject(i + 1, parameters[i]);
                 }
 
-                resultSet = callableStatement.executeQuery();
+                // Register the cursor OUT parameter
+                callableStatement.registerOutParameter(parameters.length + 1, OracleTypes.CURSOR);
+
+                // Execute the stored procedure
+                callableStatement.execute();
+
+                // Retrieve the cursor as a ResultSet
+                resultSet = (ResultSet) callableStatement.getObject(parameters.length + 1);
             } else { // Nếu là truy vấn thông thường
                 PreparedStatement statement = connection.prepareStatement(query);
                 for (int i = 0; i < parameters.length; i++) {
@@ -84,6 +105,7 @@ public class DataProvider {
 
     public int executeNonQuery(String query, Object... parameters) {
         int affectedRows = 0;
+//        query = query.substring(0, 4) + " CHNONGSAN." + query.substring(5);
         try {
             if (query.toLowerCase().startsWith("call")) { // Nếu là gọi stored procedure
                 StringBuilder sqlBuilder = new StringBuilder();
@@ -94,7 +116,8 @@ public class DataProvider {
                     }
                     sqlBuilder.append("?");
                 }
-                sqlBuilder.append(")}");
+
+                sqlBuilder.append(") }");
 
                 CallableStatement callableStatement = connection.prepareCall(sqlBuilder.toString());
                 for (int i = 0; i < parameters.length; i++) {
@@ -102,8 +125,9 @@ public class DataProvider {
                 }
 
                 callableStatement.execute();
+
                 affectedRows = callableStatement.getUpdateCount();
-            } else { // Nếu là truy vấn thông thường
+                } else { // Nếu là truy vấn thông thường
                 PreparedStatement statement = connection.prepareStatement(query);
                 for (int i = 0; i < parameters.length; i++) {
                     statement.setObject(i + 1, parameters[i]);
@@ -112,7 +136,6 @@ public class DataProvider {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         return affectedRows;
     }

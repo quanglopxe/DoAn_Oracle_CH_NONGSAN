@@ -81,7 +81,10 @@ public class NhanVien {
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
-
+    public NhanVien(String TenNV)
+    {
+        this.tenNV = TenNV;
+    }
     public NhanVien(ResultSet rs) {
         try {
             this.maNV = rs.getInt("MaNV");

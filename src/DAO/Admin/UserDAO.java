@@ -63,6 +63,22 @@ public class UserDAO {
         }
         return listUser;
     }
+    public ArrayList<User> getListUser() {
+        ArrayList<User> listUser = new ArrayList<User>();
+        try {
+            ResultSet rs = DataProvider.getInstance().executeQuery("call sys.get_local_open_users");
+            while (rs.next()) {
+                String username = rs.getString("USERNAME");
+                User user = new User(username);
+                listUser.add(user);
+            }
+        } catch (SQLException ex) {
+            // Handle the SQLException appropriately
+            ex.printStackTrace(); // For example, printing the stack trace
+        }
+        return listUser;
+    }
+    
     public String getEmpname(String username)
     {
         String empName = null;
