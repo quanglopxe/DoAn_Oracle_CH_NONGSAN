@@ -49,14 +49,13 @@ public class Permission {
 
     public Permission() {
     }
-    
+    public Permission(String priv) {
+        this.privilege = priv;
+    }
     public Permission(ResultSet rs) {
         try {
             this.grantee = rs.getString("grantee");
-            this.privilege = rs.getString("privilege");
-            this.admin_option = rs.getString("admin_option");
-            this.common = rs.getString("common");
-            
+            this.privilege = rs.getString("privilege");            
             
         } catch (SQLException ex) {
             Logger.getLogger(Permission.class.getName()).log(Level.SEVERE, null, ex);

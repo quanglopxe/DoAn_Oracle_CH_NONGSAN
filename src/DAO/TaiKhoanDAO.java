@@ -4,6 +4,7 @@ import DTO.NhanVien;
 import DAO.DataProvider;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /*
@@ -41,5 +42,20 @@ public class TaiKhoanDAO {
             e.printStackTrace();
         }
         return nv;
+    }
+    public ArrayList<NhanVien> getListNhanVien() {
+        ArrayList<NhanVien> listNhanVien = new ArrayList<NhanVien>();
+        try {
+            ResultSet rs = DataProvider.getInstance().executeQuery("call CHNONGSAN.get_employee_names");
+            while (rs.next()) {
+                String username = rs.getString("TenNV");
+                NhanVien nv = new NhanVien(username);
+                listNhanVien.add(nv);
+            }
+        } catch (SQLException ex) {
+            // Handle the SQLException appropriately
+            ex.printStackTrace(); // For example, printing the stack trace
+        }
+        return listNhanVien;
     }
 }
